@@ -2,6 +2,7 @@ var displayBuffer = ""
 var numero = ""
 var termos = [undefined,undefined,undefined]
 var resultado = undefined
+var tela = document.getElementById('display')
 
 function pressNum(num){
     numero = numero.concat(num.innerHTML)
@@ -13,22 +14,12 @@ function pressOperator(op){
     showDisplay(op.innerHTML)
     numero = ""
 }
+function calcular(fn) {
+  return new Function('return ' + fn)();
+}
 function pressEqual(){
-    termos[2] = numero
-    switch(termos[1]){
-        case '+':
-            resultado = Number(termos[0])+Number(termos[2]);
-            break;
-        case '-':
-            resultado = Number(termos[0])-Number(termos[2]);
-            break;
-        case '*':
-            resultado = Number(termos[0])*Number(termos[2]);
-            break;
-        case '/':
-            resultado = Number(termos[0])/Number(termos[2]);
-            break;
-    }
+    resultado = calcular(tela.value)
+
     clearDisplay()
     showDisplay(resultado)
     clearMemory()
@@ -49,6 +40,5 @@ function clearAll(){
 }
 function showDisplay(conteudo){
     displayBuffer = displayBuffer.concat(conteudo)
-    var tela = document.getElementById('display')
     tela.value = displayBuffer
 }
